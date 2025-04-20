@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Квест: Судьба футболиста</title>
+  <style>
+    body {
+      background: #111;
+      color: #0f0;
+      font-family: monospace;
+      padding: 20px;
+    }
+    #text {
+      white-space: pre-line;
+      margin-bottom: 20px;
+    }
+    .btn {
+      background: #222;
+      color: #0f0;
+      border: 1px solid #0f0;
+      padding: 10px;
+      margin: 5px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #0f0;
+      color: #111;
+    }
+  </style>
+</head>
+<body>
+  <div id="text">Нажми "Начать игру" чтобы начать квест.</div>
+  <div id="buttons"></div>
+  <script>
+    const text = document.getElementById('text');
+    const buttons = document.getElementById('buttons');
+
+    function show(textContent, options) {
+      text.innerText = textContent;
+      buttons.innerHTML = '';
+      options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.innerText = opt.label;
+        btn.className = 'btn';
+        btn.onclick = opt.action;
+        buttons.appendChild(btn);
+      });
+    }
+
+    function start() {
+      show("Кого ты выбираешь?", [
+        { label: "Илиан", action: iliangame },
+        { label: "Рома", action: () => gameOver("Рома проиграл в Fortnite, стал зомби и укусил тебя в Будейко. Game Over.") },
+        { label: "Мага", action: maga },
+        { label: "Даня", action: dania },
+        { label: "Денис Лоу", action: () => gameOver("Ты попадаешь под машину, Денис Лоу может тебя спасти, но забивает на тебя, 1 гол в его карьере, урааа. Конец.") },
+      ]);
+    }
+
+    function iliangame() {
+      show("Ты должен пойти на специальную миссию, от которой решится твоя жизнь. Илиан оживил Efootball 25. Кого выберешь?", [
+        { label: "Дрогба", action: drogba },
+        { label: "Эн-Несери", action: () => gameOver("Эн-Несери настолько бот, что тебя даже за него не приняли. Ты умер.") },
+        { label: "Касильяс", action: casillas },
+        { label: "Тирней", action: () => gameOver("Ты вышел на поле, получил травму. Игра окончена.") },
+        { label: "Аурнес", action: aurnes },
+      ]);
+    }
+
+    function drogba() {
+      show("1. Ударить сам\n2. Отдать пас напарнику", [
+        { label: "Ударить сам", action: () => gameOver("Ты не попадаешь, все тебя ненавидят. Конец карьеры.") },
+        { label: "Отдать пас", action: () => win("Вы проходите в финал. Тебя запомнили больше, чем гол, ты попадаешь в зал славы Челси. Победа!") },
+      ]);
+    }
+
+    function casillas() {
+      show("1. Остаться в воротах\n2. Подкат", [
+        { label: "Остаться", action: () => gameOver("Тебе забили. Ты трус. Конец.") },
+        { label: "Подкат", action: () => win("Ты спас ворота, Золотой мяч — твой! Победа!") },
+      ]);
+    }
+
+    function aurnes() {
+      show("1. Постричься налысо\n2. Купить парик", [
+        { label: "Лысым", action: () => gameOver("Ничего не изменилось. Ты плачешь. Конец карьеры.") },
+        { label: "Парик", action: () => win("Ты становишься моделью-футболистом. Победа!") },
+      ]);
+    }
+
+    function maga() {
+      show("Мага зовёт в качалку. Что качаешь?", [
+        { label: "Руки", action: () => gameOver("Мага включает амонг ас, ты умираешь позорно под гантелью. Конец.") },
+        { label: "Ноги", action: magaLegs },
+        { label: "Пресс", action: () => win("Ты фоткаешь пресс в инсту. Ты доволен жизнью. Победа!") },
+      ]);
+    }
+
+    function magaLegs() {
+      show("Ты стал футболистом. Куда идёшь?", [
+        { label: "Барселона", action: () => gameOver("Ты выигрываешь ЛЧ, но ВАДИМ АЛЛО... это был сон. Ты просыпаешься в слезах. Конец.") },
+        { label: "Карабах", action: () => win("Ты легенда Карабаха. Победа!") },
+      ]);
+    }
+
+    function dania() {
+      show("Он не укусил. Что сделаешь?", [
+        { label: "Назвать змеёнышем", action: () => gameOver("Он кричит 'Я НЕ ЗМЕЁНЫШ' и кусает тебя. Ты умираешь.") },
+        { label: "Приручить", action: () => win("Теперь вы как Санджей и Крейг. Победа!") },
+      ]);
+    }
+
+    function win(msg) {
+      show(msg + "\n\nКстати, ты бот :)", [
+        { label: "Играть заново", action: start }
+      ]);
+    }
+
+    function gameOver(msg) {
+      show(msg + "\n\nКстати, ты бот :)", [
+        { label: "Играть заново", action: start }
+      ]);
+    }
+
+    start();
+  </script>
+</body>
+</html>
